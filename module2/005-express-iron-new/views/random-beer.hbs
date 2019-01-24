@@ -1,0 +1,16 @@
+<div class="index-container" >
+      <img class="random-image" src='{{randomBeer.image_url}}' alt="Card image beer">
+      <div class="card-body">
+        <h5 class="card-title">{{randomBeer.name}} </h5>
+        <h6 class="card-title"> {{randomBeer.tagline}}</h6>
+        <p class="card-text"> {{randomBeer.description}}</p>
+        <h6 class='card-title'>Food Pairing</h6>
+
+        <ul>
+            {{#each randomBeer.food_pairing}}
+                <li>{{this}}</li>
+            {{/each}}
+        </ul>
+        
+      </div>
+</div>
