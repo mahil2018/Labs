@@ -1,0 +1,17 @@
+<ul>
+{{#each allTheArtists }}
+    <li>
+        {{ this.name }};
+        {{!-- console.log({{ this.name }}); --}}
+        
+        <br>
+         {{!-- console.log('Colombia',{{ this.images.2.url }}) --}}
+        <img src="{{ this.images.0.url }}" alt="" width="300px">
+        {{!-- console.log('Colombia',{{ this.images.0.url }}) --}}
+        <br>
+        {{!-- app.get('/albums/:artistId', (req, res) => { --}}
+     <a href="/albums/{{ this.id }}">See the albums</a>
+     <br>
+    </li>
+{{/each}}
+</ul>

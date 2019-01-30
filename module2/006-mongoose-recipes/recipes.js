@@ -41,7 +41,13 @@ const Recipe = mongoose.model('Recipe', recipeSchema);
 //   });
 
 // // 3. Insert Many recipes
-// Recipe.insertMany(data);
+//  Recipe.insertMany(data)
+//  .then (newRecipe => {
+//      newRecipe.forEach(({title}) => console.log(`Title is ${title}`));
+//  })
+//  .catch(error => {
+//      console.log("Error adding all recipes to DB: ", error);
+//  })
 
 // // Iteration 4 - Update recipe
 // Recipe.updateOne({ title: "Rigatoni alla Genovese", duration: 100})
@@ -66,12 +72,21 @@ const Recipe = mongoose.model('Recipe', recipeSchema);
  
 //6. Close the Database
 
-Recipe.find(data) //<======== .find() will ALWAYS give you an ARRAY back
+Recipe.find() //<======== .find() will ALWAYS give you an ARRAY back
 .then( allRecipesFromDB =>{
-    allRecipesFromDB.forEach(Student => {
-        console.log(allRecipesFromDB.name);
+    allRecipesFromDB.forEach(recipes => {
+        console.log(recipes.name);
     })
 })
 .catch(err => {
     console.log("Error while is looking for", err);   
 })
+
+process.on ('SIGHT', () =>{
+    mongoose.Connection.close(() => {
+        Console.log("Mongoose default connection disconnected through app termination");
+        process.exit(0);
+    });
+
+});
+
