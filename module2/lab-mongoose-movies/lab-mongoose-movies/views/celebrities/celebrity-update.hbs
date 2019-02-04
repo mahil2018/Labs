@@ -1,0 +1,15 @@
+
+{{!-- //localhost:3000/celebrities/modify/5c579264643c2ff3f7d61b33 --}}
+<form action="/celebrities/modify/{{celebrityUpdate._id}}" method="post">
+  <label form=""> Celebrity name: </label>
+  <input type="text" name="name" id="" value="{{celebrityUpdate.name}}">
+
+<label form=""> Occupation: </label>
+  <input type="text" name="occupation" id="" value="{{celebrityUpdate.occupation}}">
+
+  <label form=""> Catch Phrase </label>
+  <input type="text" name="catchPhrase" id="" value="{{celebrityUpdate.catchPhrase}}">
+
+
+  <button type="submit">Save changes</button>
+</form>
