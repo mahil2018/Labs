@@ -1,0 +1,22 @@
+<h1>Login</h1>
+
+<form action="/login" method = "POST">
+
+
+<label for="">Email: </label>
+<input type="text" name="email" id="" >
+
+<label for="">Password </label>
+<input type="password" name="password" id="" >
+
+{{#if messages}}
+  {{#each messages}}
+    {{!-- <div class="error-message">{{ message }}</div> --}}
+     {{this}}
+     {{/each}}
+{{/if}}
+
+
+  <input type="submit" value="Log In">
+
+</form>
