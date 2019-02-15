@@ -15,14 +15,14 @@ router.get("/signup",  (req, res) => {
   res.render("passport/signup");
 });
 
-
-router.post('/signup', (req, res, next) => {
+//localhost:3000/register ======== POST /register 404 76.037 ms - 565
+router.post('/register', (req, res, next) => {
   console.log('hi', req.body);
   const userEmail = req.body.email;
   const userFullname = req.body.fullname;
   const userPassword = req.body.password;
 
-  if (userEmail == '' || userPassword == '' || userFullName == '') {
+  if (userEmail == '' || userPassword == '' || userFullname == '') {
     req.flash('error', 'please fill all the fields')
     res.render('passport/signup');
     return;
@@ -46,7 +46,7 @@ router.post('/signup', (req, res, next) => {
       .then(user => {
         //if all good, log in the user automatically
         // console.log('redirecting to another page:', user);
-        req.login(user, (err) => {      //entrance to the session
+        req.login(user, (err) => {      // auto login, automatic login, entrance to the session
           if(err){
             // req.flash.error = 'some message here'
             req.flash('error', 'Auto login does not work so please log in manually');
@@ -66,17 +66,19 @@ router.get('/login', (req, res, next) => {
   res.render('passport/login');
 });
 
-router.post("/login", passport.authenticate("local", {
-  successRedirect: "/",
+router.post("/auth", passport.authenticate("local", {
+  successRedirect: "/private",
   failureRedirect: "/login",
   failureFlash: true,
   passReqToCallback: true
 }));
 
 //========================LOGOUT=======
-router.get("/logout", (req, res, next) => {
+router.post("/logout", (req, res, next) => {
   req.logout();
   res.redirect("/login");
 })
+
+
 
 module.exports = router;
