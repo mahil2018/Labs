@@ -8,11 +8,10 @@ const hbs          = require('hbs');
 const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
-const session = require("express-session");
+const session      = require("express-session");
 
 //
 const passportSetup= require('./config/passport/passport-setup');
-
 
 mongoose
   .connect('mongodb://localhost/auth-with-passport', {useNewUrlParser: true})
@@ -67,6 +66,6 @@ app.use('/', index);
 
 app.use('/', require("./routes/auth-routes"));
 app.use('/', require('./routes/user-routes'));
-// app.use('/', require('./routes/room-routes'));
+app.use('/', require('./routes/room-routes'));
 
 module.exports = app;

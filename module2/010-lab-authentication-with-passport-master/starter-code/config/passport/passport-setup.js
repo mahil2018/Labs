@@ -4,6 +4,9 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const flash = require("connect-flash");
 const User = require('../../models/user');
+require('./local-strategy');
+require('./slack-strategy');
+require('./google-strategy');
 //Strategy, User serialize and User deserialize
                     // user is a placeholder
 passport.serializeUser((user, cb) => {
@@ -16,24 +19,6 @@ passport.deserializeUser((id, cb) => {
     cb(null, user);
   });
 });
-
-passport.use(new LocalStrategy({ usernameField: 'email'}, (email, password, next) => {
- 
-  User.findOne({ email }, (err, user) => {
-    if (err) {
-      return next(err);
-    }
-    if (!user) {
-      return next(null, false, { message: "Incorrect username" });
-    }
-    if (!bcrypt.compareSync(password, user.password)) {
-      return next(null, false, { message: "Incorrect password" });
-    }
-
-    return next(null, user);
-  });
-}));
-
 
 
 
@@ -49,7 +34,7 @@ function passportBasicSetup(blah){
   blah.use((req, res, next) => {
     res.locals.messages = req.flash();  // messages defined in all app. this is a method to define 
     if(req.user){
-      res.locals.currentUser = req.user;  // I can use user since any view (hbs), req.user is the user of the session.
+      res.locals.currentUser = req.user;  // I can use currentUser since any view (hbs), req.user is the user of the session.
     }
     next();
   })

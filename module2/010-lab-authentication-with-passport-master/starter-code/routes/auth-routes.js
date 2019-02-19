@@ -53,6 +53,7 @@ router.post('/register', (req, res, next) => {
             req.redirect('/login');
             return;
           }
+          console.log(currenUser);
           res.redirect('/private');
         })
       }) 
@@ -67,6 +68,7 @@ router.get('/login', (req, res, next) => {
 });
 
 router.post("/auth", passport.authenticate("local", {
+  
   successRedirect: "/private",
   failureRedirect: "/login",
   failureFlash: true,
@@ -79,6 +81,26 @@ router.post("/logout", (req, res, next) => {
   res.redirect("/login");
 })
 
+//====================== SLACK LOGIN ===========
+router.get('/slack-login', passport.authenticate('slack'));
+//  callbackURL: '/slack/callback' => from 'slack-strategy.js'
+router.get('/slack/callback', passport.authenticate('slack', {
+  successRedirect: '/private',          //===============================
+  successFlash: 'Slack login successful',
+  failureRedirect: '/login',
+  failureMessage: 'Slack login failed, please try to login manually'
+}));
 
+//====================== GOOGLE LOGIN ===========
+router.get("/google-login", passport.authenticate("google", {
+  scope: ["https://www.googleapis.com/auth/plus.login",
+          "https://www.googleapis.com/auth/plus.profile.emails.read"]
+}));
+
+router.get("/google/callback", passport.authenticate("google", {
+  failureRedirect: "/login",
+  successRedirect: "/private",
+  successMessage: 'Google login success'
+}));
 
 module.exports = router;
