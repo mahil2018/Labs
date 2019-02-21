@@ -4,12 +4,16 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const User = require('../../models/user');
 
 passport.use(new GoogleStrategy({
-  clientID: '=tq9.apps.googleusercontent.com',
-  clientSecret: '7=E',
+  clientID: '15ent.com',
+  clientSecret: 'IE',
+
   callbackURL: '/google/callback',
   proxy: true // important for production
 }, (accessToken, refreshToken, userInfo, cb) => {
   console.log('Google acc: ', userInfo);
+  //use ES6 destructuring instead of having this:
+  //// const displayName = userInfo.displayName;
+  // const displayName = userInfo.displayName;
   const { displayName, emails } = userInfo;
   //Check Point to check if the user already exist in the DB
   User.findOne({ $or: [

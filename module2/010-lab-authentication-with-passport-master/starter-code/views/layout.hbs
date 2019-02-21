@@ -10,18 +10,21 @@
 <body>
 <nav>
     {{#if user}}
-      <a href="/private">Super secret page</a>
-      <a href="/rooms/add">Create a room</a>
+      <a href="/rooms">Room list</a><br>
+      <a href="/private">Super secret page</a><br>
+      <a href="/rooms/add">Create a room</a><br>
       <form action="/logout", method="POST" >
             <button type="Submit">Logout</button>
       </form>
         {{else}}
-          <a href="/signup">Signup</a>
-          <a href="/login">Login</a>
+          <a href="/rooms">Room list : </a><button type="Submit">Delete</button><br>
+          <a href="/signup">Signup</a><br>
+          <a href="/login">Login</a><br>
+          <a href="/slack-login">Login with Slack</a><br>
+          <a href="/google-login">Login with Google</a><br>
 
     {{/if}}
-    <a href="/slack-login">Login with Slack</a>
-    <a href="/google-login">Login with Google</a>
+    
     <a href="/public">Public page</a>
   </nav>
   {{{body}}}

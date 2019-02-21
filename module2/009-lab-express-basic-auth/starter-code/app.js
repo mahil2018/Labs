@@ -13,7 +13,7 @@ const session    = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 
 mongoose
-  .connect('mongodb://localhost/starter-code', {useNewUrlParser: true})
+  .connect('mongodb://localhost/express-basic-auth', {useNewUrlParser: true})
   .then(x => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
   })
@@ -69,7 +69,11 @@ app.use('/', index);
 const router = require('./routes/auth');
 app.use('/', router);
 
+app.use('/', require('./routes/auth-routes'));
+
+
 // app.use('/', require('./routes/auth-routes'));
 app.use('/', require('./routes/site-routes'));
+
 
 module.exports = app;

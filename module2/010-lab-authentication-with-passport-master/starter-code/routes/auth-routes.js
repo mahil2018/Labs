@@ -64,6 +64,7 @@ router.post('/register', (req, res, next) => {
 
 //authentication
 router.get('/login', (req, res, next) => {
+  console.log('Access : ', req.body);
   res.render('passport/login');
 });
 

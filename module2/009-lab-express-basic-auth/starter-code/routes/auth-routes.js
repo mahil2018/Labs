@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 
-
 router.get("/login", (req, res, next) => {
   res.render("auth/login");
 });
@@ -11,5 +10,7 @@ router.get("/logout", (req, res, next) => {
     res.redirect("/login");
   });
 });
+
+
 
 module.exports = router;

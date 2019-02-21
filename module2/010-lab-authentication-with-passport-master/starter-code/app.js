@@ -8,9 +8,10 @@ const hbs          = require('hbs');
 const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
+
 const session      = require("express-session");
 
-//
+// import passport docs from config folder
 const passportSetup= require('./config/passport/passport-setup');
 
 mongoose
@@ -47,6 +48,8 @@ app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
+//handle session here
+//app.js
   app.use(session({
     secret: "our-passport-local-strategy-app",
     resave: true,
@@ -55,7 +58,7 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
-
+// 🎯🎯🎯 MUST come after the session: 🎯🎯🎯
 passportSetup(app);
 
 // Routes middleware goes here
@@ -67,5 +70,5 @@ app.use('/', index);
 app.use('/', require("./routes/auth-routes"));
 app.use('/', require('./routes/user-routes'));
 app.use('/', require('./routes/room-routes'));
-
+app.use('/', require('./routes/review-routes'));
 module.exports = app;

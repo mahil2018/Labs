@@ -1,5 +1,9 @@
 const express = require("express");
 const router = express.Router();
+const multer = require ('multer');
+const Picture = require('../models/picture');
+
+const upload= multer({ dest: './public/uploads'});
 
 router.get("/signup", (req, res, next) => {
   res.render("auth/signup");
@@ -86,6 +90,26 @@ router.post("/login", (req, res, next) => {
   })
   .catch(error => {
     next(error);
+  })
+});
+
+
+router.post('/upload', upload.single('photo'), (req, res) =>{
+  const pic = new Picture({
+    name: req.body.name,
+    path: '/uploads/${req.file.filename}',    
+    //uploads/${req.file.filename}',
+    originalName: req.file.filename
+  });
+  pic.save((err) => {
+    res.redirect('/');
+  });
+});
+
+router.get('/upload', function(req, res, next) {
+  console.log(req, res);
+  Picture.find((err, pictures) => {
+    res.render('index', {pictures})
   })
 });
 

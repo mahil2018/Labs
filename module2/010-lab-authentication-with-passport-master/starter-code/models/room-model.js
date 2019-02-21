@@ -6,6 +6,8 @@ const roomSchema = new Schema({
   description: { type: String },
   imageUrl: { type: String },
   owner: { type: Schema.Types.ObjectId, ref: 'User'},
+  //the ref option is what tells Mongoose which model to use during population
+  reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}]  // <======= in our case the Review model
 });
 
 const Room = mongoose.model("Room", roomSchema);
