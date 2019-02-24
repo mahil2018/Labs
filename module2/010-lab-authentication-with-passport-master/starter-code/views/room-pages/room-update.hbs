@@ -1,0 +1,21 @@
+ <h3>Description</h3>
+<p>{{ room.description }}</p>
+<hr>
+<h3>Gallery:</h3> 
+<img src= "{{room.imageUrl}}" alt="" width="300">
+{{!-- {{#if room.isDueno}} --}}
+  <form action="/rooms/{{room._id}}/update" method="post" enctype='multipart/form-data'> 
+
+    <label for="">Name</label>
+    <input type="text" name="name" id="" value="{{room.name}}">
+
+    <label for="">Description</label>
+    <textarea name="description" id="" cols="30" rows="10"> {{room.description}} </textarea>
+
+    {{!-- <img src="{{room.imageUrl}}" alt="" width="200"> --}}
+    <label for="">Upload new image</label>
+    <input type="file" name="imageUrl" id=""> {{!-- type="file" => when adding images or any other files --}}
+
+    <button type="submit">Save Changes</button>
+  </form>
+

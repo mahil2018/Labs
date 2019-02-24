@@ -7,19 +7,16 @@ const Review = require('../models/review-model');
 // create a new review
 router.post('/rooms/:roomId/add-review', (req, res, next) => {
   // step 1: create a new review
-  const newComment = {
-    user: req.user._id,
-    comment: req.body.comment,
-    canBeChanged: false
-  }
-
-  Review.create(newComment)
-  .then(theNewComment => {
+  Review.create({
+    user        : req.user._id,
+    comment     : req.body.comment,
+  })
+  .then(newComment => {
     // step 2: find the room that the new comment belongs to
     Room.findById(req.params.roomId)
     .then(foundRoom => {
       // when find the room, push the ID of the new comment into the 'reviews' array
-      foundRoom.reviews.push(theNewComment._id);
+      foundRoom.reviews.push(newComment._id);
       // step 3: save the changes you just made in the found room
       foundRoom.save()
       .then(() => {

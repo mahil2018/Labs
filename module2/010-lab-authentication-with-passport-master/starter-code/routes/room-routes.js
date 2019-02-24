@@ -8,7 +8,8 @@ const fileUploader = require('../config/upload-setup/cloudinary');
 
 // GET route to display the form to create a room
 router.get('/rooms/add', isLoggedIn, (req, res, next) => {
-  res.render('room-pages/addRoom');
+  
+  res.render('room-pages/addRoom', req.user);
 });
 
 //                          <input type="file" name="imageUrl" id=""
@@ -18,6 +19,7 @@ router.post('/create-room', fileUploader.single('imageUrl'), (req, res, next) =>
   console.log('body: ', req.body);
   console.log('----------------------');
   console.log('file:', req.file);
+  console.log('read req.user', req.user);
   const { name, description } = req.body;
   Room.create({
     name,
@@ -61,33 +63,56 @@ router.get('/rooms', (req, res, next) =>{
 })
 
 // Get the details of a specific room ===================================
+//localhost:3000/rooms/5c6e337efa63e04665be2513
 router.get('/rooms/:roomId', isLoggedIn, (req, res, next) => {
   //here we need to populate owner field but as well
+  const roomId = req.params.id;
   Room.findById(req.params.roomId).populate('owner')
-  //🎯 we need to populate 'reviews' field and the 'user' field that's inside the reviews 🎯
-  .populate({path: 'reviews', populate: {path: 'user'}})
+  .populate({path:'reviews', populate:{path:'user'}})
   .then(foundRoom => {
-    console.log('==========', foundRoom);
+    // console.log('==========', foundRoom);
+    // console.log('Owner is: ', foundRoom.owner)
+    // console.log('The current user is: ', req.user._id)
     if (foundRoom.owner.equals(req.user._id)){
-      foundRoom.isOwner = true;
+      foundRoom.isDueno = true;
     }
-    //go through all the reviews and check which ones are creaed by currently logged in user
-    Promise.all(foundRoom.reviews.filter(singleReview => {                    //            |
-      if(singleReview.user._id.equals(req.user._id)){   // <--------------------------------|
-        //and if that's the case, create new property in the each review that satisfies criteria
-        //and use this property when looping throungh the array of reviews in hbs file to make sure
-        // that logged in user can oly edit and delete the reviews they created
-        singleReview.canBeChanged = true;
-      }
-      return singleReview;
-      }))
-      .then(() =>{
-        res.render('room-pages/room-details', { room: foundRoom})
-      })
-      .catch( err => next(err))
+    res.render('room-pages/room-details', { room: foundRoom})
   })
   .catch( err => next(err))
 })
+//GET routes to edit rooms
+router.get('/rooms/:id/edit', (req, res, next)=>{
+  const id = req.params.id;
+  console.log('Miami', req.params.id);
+  Room.findById(req.params.id)
+    .then(foundRoom => {
+      res.render('room-pages/room-update', {room: foundRoom});
+    })
+    .catch(err => ('Error while editing room: ', err))
+})
+//localhost:3000/rooms/5c6e337efa63e04665be2513/update ===> POST /rooms/5c6e337efa63e04665be2513/update
+router.post('/rooms/:id/update', fileUploader.single('imageUrl'), (req, res, next) => {
+        const id = req.params.id;
+        const { name, description } = req.body;
+        console.log('req.file: ', req.file);
+        const updateRoom = {
+          //key of the <form>        //key of model
+          name,                      
+          description,
+          owner                     : req.user._id,
+        }
+        if(req.file){
+          updateRoom.imageUrl                  = req.file.secure_url  // para acceder a esa propiedad de la imagen
+        }
+          Room.findByIdAndUpdate(req.params.roomId, updateRoom)
+          .then((room) =>{
+            res.redirect(`/rooms/${req.params.id}`);
+          })
+          .catch((error) =>{
+            console.log(error);
+          })
+})
+
 
 //detele a specific room
 router.post('/rooms/:id/delete', (req, res, next) => {
@@ -103,6 +128,7 @@ function isLoggedIn(req, res, next){
   if(req.user){
     next()
   } else {
+    req.flash('error', 'You need to log in in order to access the page.');
     res.redirect('/login');
   }
 }
