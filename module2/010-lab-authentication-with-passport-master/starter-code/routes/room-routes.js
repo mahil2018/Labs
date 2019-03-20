@@ -93,18 +93,18 @@ router.get('/rooms/:id/edit', (req, res, next)=>{
 //localhost:3000/rooms/5c6e337efa63e04665be2513/update ===> POST /rooms/5c6e337efa63e04665be2513/update
 router.post('/rooms/:id/update', fileUploader.single('imageUrl'), (req, res, next) => {
         const id = req.params.id;
-        const { name, description } = req.body;
+        const { name, description, owner } = req.body;
         console.log('req.file: ', req.file);
         const updateRoom = {
           //key of the <form>        //key of model
           name,                      
           description,
-          owner                     : req.user._id,
+          owner     
         }
         if(req.file){
           updateRoom.imageUrl                  = req.file.secure_url  // para acceder a esa propiedad de la imagen
         }
-          Room.findByIdAndUpdate(req.params.roomId, updateRoom)
+          Room.findByIdAndUpdate(req.params.id, updateRoom)
           .then((room) =>{
             res.redirect(`/rooms/${req.params.id}`);
           })

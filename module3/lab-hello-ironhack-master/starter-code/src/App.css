@@ -1,0 +1,16 @@
+.App {
+    margin: 1rem;
+    font-family: Arial, Helvetica, sans-serif;
+    
+
+  }
+.top-section {
+    background-color: black;
+}
+.top-section h1{
+    color: white;
+
+}
+.component-section{
+    display: flex;
+}
