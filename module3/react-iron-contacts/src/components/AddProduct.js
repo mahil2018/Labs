@@ -12,6 +12,7 @@ class AddProduct extends Component {
         };
         console.log(this.props);
     }
+    
     // this method is reusable for anyu form !!!!!!
     onChangedHandler (event){
         //console.log("event is : ", event.target);
@@ -35,7 +36,48 @@ class AddProduct extends Component {
            price: event.target.value 
         })
     }
+    render(){
+        return(
+            <div>
+                <h2> Add a new product</h2>
+                {/* handleFormSubmit => this is the way we called the method */}
+                <form onSubmit={event => this.handleFormSubmit(event)}>
+                    <label>ID: </label>
+                    <input
+                        // onChangehandleFormSubmit
+                        name="_id"
+                        type="text"
+                        value={ this.state._id}
+                    />
+                    <br />
+                    <label>NAME: </label>
+                    <input
+                        name="name"
+                        type="text"
+                        value={ this.state.name}
+                    />
+                    <br />
+                    <label>PRICE: </label>
+                    <input
+                        name="price"
+                        type="number"
+                        value={ this.state.price}
+                    />
+                    <br />
+                    <label>IN STOCK: </label>
+                    <input
+                        name="inStock"
+                        type="checkbox"
+                        checked={ this.state.inStock}
+                    />
+                    <br />
+                    <button> Save new product</button>
 
+                </form>
+
+            </div>
+        )
+    } 
 
 }
 

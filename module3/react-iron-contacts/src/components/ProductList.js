@@ -59,6 +59,7 @@ class ProductsList extends Component {
             <div>
                 {/* add AddProduct component here */}
                 {/* <AddProduct productAddition= { productToBeSaved => this.addNewProduct(productToBeSaved)} /> */}
+                <AddProduct />
                 <button onClick ={ () => this.checkIfInStock()} > { showInStock ?  "All products" : "In Stock" }</button>
                 <ul>
                     { products.map((oneProd, index) => {
