@@ -12,7 +12,7 @@ class Contacts extends Component {
         const copyOfContacts = [...otherContacts]
         const rest = copyOfContacts.splice(5)
         const random = Math.floor(Math.random()*rest.length)
-        console.log(random)
+        // console.log(random)
         const newContact = rest[random]
         // use spread operator to populate all objects in the same level,
         // otherwise , it will have an array of contacts and an object
