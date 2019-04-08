@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import CoolButton from './CoolButton';
 
 class FoodsDetail extends Component {
   
@@ -12,8 +12,7 @@ class FoodsDetail extends Component {
           <h1>{foodsDetail.name}</h1>
           <p>{foodsDetail.calories}</p> 
           <img src={foodsDetail.image} alt={foodsDetail.name} />
-          {/* <img src={foodsDetail.image} >  */}
-          <p>{foodsDetail.quantity} </p> 
+          <CoolButton onClick={foodsDetail} />
       </div>
     )
   }
