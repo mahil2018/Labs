@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 
 import './App.css';
 import 'bulma/css/bulma.css';
+import foods from './foods.json';
 import Header from "./Header";
 import Food from "./FoodBox";
 import AddFood from './AddFood';
-import SearchBar from './SearchBar';
+import SearchFood from './SearchFood'
+
 
 class App extends Component {
   addFoodHandler = (theFood) => {
@@ -21,7 +23,7 @@ class App extends Component {
         <Header />
         <Food />
         <AddFood AddTheFood = {this.addFoodHandler} />
-        <SearchBar searchBoxName={"userNameSearch"} onSearchTermChange={this.onSearch} />
+        <SearchFood products={foods} />
       </div>
     );
   }

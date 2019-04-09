@@ -17,7 +17,7 @@ class SearchBar extends React.Component {
         return (
             <div className="search-box">
             <div className="searcj-icon">
-                <img src="http://share.ashiknesin.com/search-icon.png"></img>
+                <img src="http://share.ashiknesin.com/search-icon.png" alt="icon"></img>
             </div>
             <input name={name} className="search-input" id="search" type="text" placeholder="Search" value={this.state.term}
               onChange={event=>this.onInputChange(event.target.value)} onKeyPress={this.props.onKeyPress|| null}/>
