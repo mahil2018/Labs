@@ -9,3 +9,28 @@
   .message-header {
       background-color: #209cee;
   }
+
+  .plain-label{
+    font-size: 18px;
+    font-weight: bold;
+    background: #f5f5f5;
+    border: 1px solid #333;
+    padding: 4px 8px;
+  }
+  .green-label{
+    background: green;
+    color: white;
+  }
+  .red-label{
+    background: red;
+    color: white;
+  }
+  .orange-label{
+    background: orange;
+    color: white;
+  }
+  .black-label{
+    background: black;
+    color: white;
+  }
+  

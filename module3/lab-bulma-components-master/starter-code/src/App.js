@@ -15,7 +15,10 @@ class App extends Component {
                 <FormField label="Email" type="email" placeholder="mariahromeroa@gmail.com" />
                 <CoolButton classname="CoolButton" issmall isdanger>Button 1</CoolButton> 
                 <CoolButton issmall issuccess>Button 2</CoolButton>
-                <Message isInfo title="Hello World"/>   
+                <Message isInfo title="Hello World"/>  
+                const number;
+                <FormField label="temperature" type={Number} placeholder="oF" value={Number} />
+                <calculator number />
             </div>
         );
     }
