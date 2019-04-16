@@ -1,40 +1,34 @@
 import React, { Component } from 'react';
 import countries from './countries.json';
+import { NavLink } from 'react-router-dom';
 
+function CountryDetail(props) {
+  const { params } = props.match;
 
-class CountryDetail extends Component {
-  constructor (props) {
-    super(props);
-    this.state={
-      countries: countries
-    };
-    // console.log(countries)
-  }
-  // componentDidMount () {
-  //   const promise = countries.name;
-  //   // promise.then(response => response.json())
-  //   promise.then(data => this.setState({ data }));
-  // }
+  const getCountry = idCountry => {
+    return countries.filter(Country => {
+      return Country.cca3 === idCountry;
+    });
+  };
+
+  const myCountry = getCountry(params.id)[0];
+
     
-  render() {
 
-    const { countries }  = this.state;
-    // <input 
-    console.log(countries);
     return (
       
-              <div className="col-7">
-        <h1>{countries.name}</h1>
+      <div className="col-7">
+        <h1>{myCountry.name.official}</h1>
         <table className="table">
           <thead />
           <tbody>
             <tr>
               <td style={{width: '30%'}}>Capital</td>
-              <td>Paris</td>
+              <td>{myCountry.capital}</td>
             </tr>
             <tr>
               <td>Area</td>
-              <td>551695 km
+              <td>{myCountry.area} km
                 <sup>2</sup>
               </td>
             </tr>
@@ -42,14 +36,13 @@ class CountryDetail extends Component {
               <td>Borders</td>
               <td>
                 <ul>
-                  <li><a href="/AND">Andorra</a></li>
-                  <li><a href="/BEL">Belgium</a></li>
-                  <li><a href="/DEU">Germany</a></li>
-                  <li><a href="/ITA">Italy</a></li>
-                  <li><a href="/LUX">Luxembourg</a></li>
-                  <li><a href="/MCO">Monaco</a></li>
-                  <li><a href="/ESP">Spain</a></li>
-                  <li><a href="/CHE">Switzerland</a></li>
+                {myCountry.borders.map((border, index) => (
+                  <li key={`border-${index}`}>
+                    <NavLink to={`/country/${border}`}>
+                      {border}
+                    </NavLink>
+                  </li>
+                ))}
                 </ul>
               </td>
             </tr>
@@ -59,7 +52,7 @@ class CountryDetail extends Component {
 
       
     );
-  }
+  
 }
 
 export default CountryDetail;
