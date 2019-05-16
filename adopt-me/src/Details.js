@@ -1,6 +1,9 @@
 import React from'react';
 import pf from 'petfinder-client';
-import navigate from "@reach/router/lib/history";
+import { navigate } from "@reach/router/lib/history";
+import { Switch,  Route } from "react-router-dom";  //NavLink,
+import axios from "axios";
+import Navbar from './Navbar'
 import Carousel from './Carousel';
 
 const petfinder = pf ({
@@ -15,6 +18,13 @@ class Details extends React.Component {
       this.state = { loading: true };
     }
     componentDidMount() {
+      axios.get(`${process.env.REACT_APP_API_URL}/api/checkuser`, { withCredentials:true })
+        .then(responseFromBackend => {
+          // console.log("Check User in APP.JS: ",responseFromBackend.data)
+          const { userDoc } = responseFromBackend.data;
+          this.syncCurrentUser(userDoc);
+        });
+      
       petfinder.pet
         .get({
           output: "full",
@@ -41,6 +51,20 @@ class Details extends React.Component {
         })
         .catch(err => this.setState({ error: err }));
     }
+    syncCurrentUser(user){
+      this.setState({ currentUser: user });
+      console.log(this.state);
+    }
+    logout(){
+      axios.delete(
+        `${process.env.REACT_APP_API_URL}/api/logout`,
+        {withCredentials:true}
+      )
+      .then(()=> this.syncCurrentUser(null))
+      .catch(err => console.log(err))
+    }
+  
+
     render() {
       if (this.state.loading) {
         return <h1>loading … </h1>;
@@ -50,6 +74,9 @@ class Details extends React.Component {
   
       return (
         <div className="details">
+          <header>
+          <Navbar currentUser={this.state.currentUser} onUserChange={userDoc => this.syncCurrentUser(userDoc)} />
+        </header>
           <Carousel media={media} />
           <div>
             <h1>{name}</h1>
