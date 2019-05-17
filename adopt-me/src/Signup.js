@@ -26,7 +26,7 @@ genericSync(event){
 handleSubmit(event) {
   event.preventDefault();
   axios.post(
-    `${process.env.REACT_APP_API_URL}/api/signup`,
+    'http://localhost:3001/api/checkuser/api/signup',
     this.state,
     { withCredentials: true }, // FORCE axios to send cookies across domains
 )

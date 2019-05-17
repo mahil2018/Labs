@@ -25,7 +25,7 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-    axios.get(`${process.env.REACT_APP_API_URL}/api/checkuser`, { withCredentials:true })
+    axios.get( 'http://localhost:3001/api/checkuser/api/checkuser', { withCredentials:true })
     .then(responseFromBackend => {
       // console.log("Check User in APP.JS: ",responseFromBackend.data)
       const { userDoc } = responseFromBackend.data;
@@ -38,7 +38,7 @@ class App extends React.Component {
   }
   logout(){
     axios.delete(
-      `${process.env.REACT_APP_API_URL}/api/logout`,
+      'http://localhost:3001/api/checkuser/api/logout',
       {withCredentials:true}
     )
     .then(()=> this.syncCurrentUser(null))

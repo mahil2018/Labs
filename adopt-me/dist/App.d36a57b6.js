@@ -101190,7 +101190,7 @@ function (_Component) {
 
       event.preventDefault();
 
-      _axios.default.post("".concat("http://localhost:3001", "/api/login"), this.state, {
+      _axios.default.post('http://localhost:3001/api/checkuser/api/login', this.state, {
         withCredentials: true
       } // FORCE axios to send cookies across domains
       ).then(function (response) {
@@ -101255,7 +101255,10 @@ function (_Component) {
         onClick: function onClick() {
           return console.log('Clicked');
         }
-      }, "Login"));
+      }, "Login")) // <Link>
+      // Already Have an account? <NavLink to={"/login-page"}> Login</NavLink>
+      // </Link >
+      ;
     }
   }]);
 
@@ -101264,6 +101267,171 @@ function (_Component) {
 
 ;
 var _default = Login;
+exports.default = _default;
+},{"react":"node_modules/react/index.js","semantic-ui-react":"../node_modules/semantic-ui-react/dist/es/index.js","axios":"node_modules/axios/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","./ModalExample":"ModalExample.js"}],"Signup.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _semanticUiReact = require("semantic-ui-react");
+
+var _axios = _interopRequireDefault(require("axios"));
+
+var _reactRouterDom = require("react-router-dom");
+
+var _ModalExample = _interopRequireDefault(require("./ModalExample"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Signup =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Signup, _Component);
+
+  function Signup(props) {
+    var _this;
+
+    _classCallCheck(this, Signup);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Signup).call(this, props));
+    _this.state = {
+      fullName: "",
+      email: "",
+      originalPassword: "",
+      message: null
+    };
+    return _this;
+  }
+
+  _createClass(Signup, [{
+    key: "genericSync",
+    value: function genericSync(event) {
+      var _event$target = event.target,
+          name = _event$target.name,
+          value = _event$target.value;
+      this.setState(_defineProperty({}, name, value));
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(event) {
+      var _this2 = this;
+
+      event.preventDefault();
+
+      _axios.default.post('http://localhost:3001/api/checkuser/api/signup', this.state, {
+        withCredentials: true
+      } // FORCE axios to send cookies across domains
+      ).then(function (responseFromServer) {
+        console.log("Signup Page", responseFromServer);
+        var userDoc = responseFromServer.data.userDoc; //send "userDoc" to the App.js function that changeS "currentUser"
+
+        _this2.props.onUserChange(userDoc);
+      }).catch(function (err) {
+        if (err.response && err.response.data) {
+          // console.error("API response", err.response.data)
+          return _this2.setState({
+            message: err.response.data.message
+          });
+        }
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      var currentUser = this.props.currentUser;
+
+      if (currentUser) {
+        return _react.default.createElement(_reactRouterDom.Redirect, {
+          to: "/"
+        });
+      }
+
+      return _react.default.createElement(_semanticUiReact.Form, {
+        size: "large",
+        onSubmit: function onSubmit(event) {
+          return _this3.handleSubmit(event);
+        }
+      }, _react.default.createElement(_semanticUiReact.Form.Group, {
+        width: "equal"
+      }, _react.default.createElement("div", null, _react.default.createElement(_ModalExample.default, null)), _react.default.createElement(_semanticUiReact.Form.Input, {
+        value: this.state.fullName,
+        onChange: function onChange(event) {
+          return _this3.genericSync(event);
+        },
+        name: "fullName",
+        fluid: true,
+        icon: "user",
+        iconPosition: "left",
+        placeholder: "Full Name",
+        label: "Full Name"
+      }), _react.default.createElement(_semanticUiReact.Form.Input, {
+        value: this.state.email,
+        onChange: function onChange(event) {
+          return _this3.genericSync(event);
+        },
+        name: "email",
+        fluid: true,
+        icon: "user",
+        iconPosition: "left",
+        placeholder: "Email address",
+        label: "Email Address"
+      }), _react.default.createElement(_semanticUiReact.Form.Input, {
+        value: this.state.originalPassword,
+        onChange: function onChange(event) {
+          return _this3.genericSync(event);
+        },
+        name: "originalPassword",
+        fluid: true,
+        icon: "lock",
+        iconPosition: "left",
+        label: "Password",
+        placeholder: "Password",
+        type: "password"
+      })), _react.default.createElement(_semanticUiReact.Button, {
+        color: "blue",
+        fluid: true,
+        size: "large",
+        onClick: function onClick() {
+          return console.log('Clicked');
+        }
+      }, "Sign Up"));
+    }
+  }]);
+
+  return Signup;
+}(_react.Component);
+
+;
+var _default = Signup;
 exports.default = _default;
 },{"react":"node_modules/react/index.js","semantic-ui-react":"../node_modules/semantic-ui-react/dist/es/index.js","axios":"node_modules/axios/index.js","react-router-dom":"node_modules/react-router-dom/esm/react-router-dom.js","./ModalExample":"ModalExample.js"}],"ButtonExample.js":[function(require,module,exports) {
 "use strict";
@@ -102505,6 +102673,8 @@ var _semanticUiReact = require("semantic-ui-react");
 
 var _Login = _interopRequireDefault(require("./Login"));
 
+var _Signup = _interopRequireDefault(require("./Signup"));
+
 var _ButtonExample = _interopRequireDefault(require("./ButtonExample"));
 
 var _Results = _interopRequireDefault(require("./Results"));
@@ -102556,7 +102726,7 @@ function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      _axios.default.get("".concat("http://localhost:3001", "/api/checkuser"), {
+      _axios.default.get('http://localhost:3001/api/checkuser/api/checkuser', {
         withCredentials: true
       }).then(function (responseFromBackend) {
         // console.log("Check User in APP.JS: ",responseFromBackend.data)
@@ -102578,7 +102748,7 @@ function (_React$Component) {
     value: function logout() {
       var _this3 = this;
 
-      _axios.default.delete("".concat("http://localhost:3001", "/api/logout"), {
+      _axios.default.delete('http://localhost:3001/api/checkuser/api/logout', {
         withCredentials: true
       }).then(function () {
         return _this3.syncCurrentUser(null);
@@ -102592,9 +102762,13 @@ function (_React$Component) {
       return _react.default.createElement("div", null, _react.default.createElement("header", null, _react.default.createElement(_router.Link, {
         to: "/"
       }, "Adopt Me!")), _react.default.createElement("span", null, _react.default.createElement(_router.Link, {
+        to: "/signup"
+      }, "Sign Up"), _react.default.createElement(_router.Link, {
         to: "/login"
       }, "Login")), _react.default.createElement(_semanticUiReact.Container, null, _react.default.createElement(_ButtonExample.default, null)), _react.default.createElement(_router.Router, null, _react.default.createElement(_Login.default, {
         path: "/login"
+      }), _react.default.createElement(_Signup.default, {
+        path: "/signup"
       }), _react.default.createElement(_Results.default, {
         path: "/"
       }), _react.default.createElement(_Details.default, {
@@ -102609,4 +102783,208 @@ function (_React$Component) {
 }(_react.default.Component);
 
 _reactDom.default.render(_react.default.createElement(App, null), document.getElementById("root"));
-},{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","semantic-ui-css/semantic.min.css":"../node_modules/semantic-ui-css/semantic.min.css","@reach/router":"node_modules/@reach/router/es/index.js","axios":"node_modules/axios/index.js","semantic-ui-react":"../node_modules/semantic-ui-react/dist/es/index.js","./Login":"Login.js","./ButtonExample":"ButtonExample.js","./Results":"Results.js","./Details":"Details.js","./SearchParams":"SearchParams.js"}]
+},{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","semantic-ui-css/semantic.min.css":"../node_modules/semantic-ui-css/semantic.min.css","@reach/router":"node_modules/@reach/router/es/index.js","axios":"node_modules/axios/index.js","semantic-ui-react":"../node_modules/semantic-ui-react/dist/es/index.js","./Login":"Login.js","./Signup":"Signup.js","./ButtonExample":"ButtonExample.js","./Results":"Results.js","./Details":"Details.js","./SearchParams":"SearchParams.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+var global = arguments[3];
+var OVERLAY_ID = '__parcel__error__overlay__';
+var OldModule = module.bundle.Module;
+
+function Module(moduleName) {
+  OldModule.call(this, moduleName);
+  this.hot = {
+    data: module.bundle.hotData,
+    _acceptCallbacks: [],
+    _disposeCallbacks: [],
+    accept: function (fn) {
+      this._acceptCallbacks.push(fn || function () {});
+    },
+    dispose: function (fn) {
+      this._disposeCallbacks.push(fn);
+    }
+  };
+  module.bundle.hotData = null;
+}
+
+module.bundle.Module = Module;
+var checkedAssets, assetsToAccept;
+var parent = module.bundle.parent;
+
+if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
+  var hostname = "" || location.hostname;
+  var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49240" + '/');
+
+  ws.onmessage = function (event) {
+    checkedAssets = {};
+    assetsToAccept = [];
+    var data = JSON.parse(event.data);
+
+    if (data.type === 'update') {
+      var handled = false;
+      data.assets.forEach(function (asset) {
+        if (!asset.isNew) {
+          var didAccept = hmrAcceptCheck(global.parcelRequire, asset.id);
+
+          if (didAccept) {
+            handled = true;
+          }
+        }
+      }); // Enable HMR for CSS by default.
+
+      handled = handled || data.assets.every(function (asset) {
+        return asset.type === 'css' && asset.generated.js;
+      });
+
+      if (handled) {
+        console.clear();
+        data.assets.forEach(function (asset) {
+          hmrApply(global.parcelRequire, asset);
+        });
+        assetsToAccept.forEach(function (v) {
+          hmrAcceptRun(v[0], v[1]);
+        });
+      } else {
+        window.location.reload();
+      }
+    }
+
+    if (data.type === 'reload') {
+      ws.close();
+
+      ws.onclose = function () {
+        location.reload();
+      };
+    }
+
+    if (data.type === 'error-resolved') {
+      console.log('[parcel] ✨ Error resolved');
+      removeErrorOverlay();
+    }
+
+    if (data.type === 'error') {
+      console.error('[parcel] 🚨  ' + data.error.message + '\n' + data.error.stack);
+      removeErrorOverlay();
+      var overlay = createErrorOverlay(data);
+      document.body.appendChild(overlay);
+    }
+  };
+}
+
+function removeErrorOverlay() {
+  var overlay = document.getElementById(OVERLAY_ID);
+
+  if (overlay) {
+    overlay.remove();
+  }
+}
+
+function createErrorOverlay(data) {
+  var overlay = document.createElement('div');
+  overlay.id = OVERLAY_ID; // html encode message and stack trace
+
+  var message = document.createElement('div');
+  var stackTrace = document.createElement('pre');
+  message.innerText = data.error.message;
+  stackTrace.innerText = data.error.stack;
+  overlay.innerHTML = '<div style="background: black; font-size: 16px; color: white; position: fixed; height: 100%; width: 100%; top: 0px; left: 0px; padding: 30px; opacity: 0.85; font-family: Menlo, Consolas, monospace; z-index: 9999;">' + '<span style="background: red; padding: 2px 4px; border-radius: 2px;">ERROR</span>' + '<span style="top: 2px; margin-left: 5px; position: relative;">🚨</span>' + '<div style="font-size: 18px; font-weight: bold; margin-top: 20px;">' + message.innerHTML + '</div>' + '<pre>' + stackTrace.innerHTML + '</pre>' + '</div>';
+  return overlay;
+}
+
+function getParents(bundle, id) {
+  var modules = bundle.modules;
+
+  if (!modules) {
+    return [];
+  }
+
+  var parents = [];
+  var k, d, dep;
+
+  for (k in modules) {
+    for (d in modules[k][1]) {
+      dep = modules[k][1][d];
+
+      if (dep === id || Array.isArray(dep) && dep[dep.length - 1] === id) {
+        parents.push(k);
+      }
+    }
+  }
+
+  if (bundle.parent) {
+    parents = parents.concat(getParents(bundle.parent, id));
+  }
+
+  return parents;
+}
+
+function hmrApply(bundle, asset) {
+  var modules = bundle.modules;
+
+  if (!modules) {
+    return;
+  }
+
+  if (modules[asset.id] || !bundle.parent) {
+    var fn = new Function('require', 'module', 'exports', asset.generated.js);
+    asset.isNew = !modules[asset.id];
+    modules[asset.id] = [fn, asset.deps];
+  } else if (bundle.parent) {
+    hmrApply(bundle.parent, asset);
+  }
+}
+
+function hmrAcceptCheck(bundle, id) {
+  var modules = bundle.modules;
+
+  if (!modules) {
+    return;
+  }
+
+  if (!modules[id] && bundle.parent) {
+    return hmrAcceptCheck(bundle.parent, id);
+  }
+
+  if (checkedAssets[id]) {
+    return;
+  }
+
+  checkedAssets[id] = true;
+  var cached = bundle.cache[id];
+  assetsToAccept.push([bundle, id]);
+
+  if (cached && cached.hot && cached.hot._acceptCallbacks.length) {
+    return true;
+  }
+
+  return getParents(global.parcelRequire, id).some(function (id) {
+    return hmrAcceptCheck(global.parcelRequire, id);
+  });
+}
+
+function hmrAcceptRun(bundle, id) {
+  var cached = bundle.cache[id];
+  bundle.hotData = {};
+
+  if (cached) {
+    cached.hot.data = bundle.hotData;
+  }
+
+  if (cached && cached.hot && cached.hot._disposeCallbacks.length) {
+    cached.hot._disposeCallbacks.forEach(function (cb) {
+      cb(bundle.hotData);
+    });
+  }
+
+  delete bundle.cache[id];
+  bundle(id);
+  cached = bundle.cache[id];
+
+  if (cached && cached.hot && cached.hot._acceptCallbacks.length) {
+    cached.hot._acceptCallbacks.forEach(function (cb) {
+      cb();
+    });
+
+    return true;
+  }
+}
+},{}]},{},["../node_modules/parcel-bundler/src/builtins/hmr-runtime.js","App.js"], null)
+//# sourceMappingURL=/App.d36a57b6.js.map
