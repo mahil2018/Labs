@@ -1,16 +1,17 @@
 import React, { Component } from "react";
-import { Button, Form, Message} from 'semantic-ui-react';
+import { Button, Form} from 'semantic-ui-react';
 import axios from "axios";
-import {Link, NavLink, Redirect} from 'react-router-dom'
+import {NavLink, Redirect} from 'react-router-dom'
 // import { Message } from 'semantic-ui-react';
 import ModalExample from './ModalExample';
 
 
 
-class Login extends Component {
+class Signup extends Component {
    constructor(props) {
      super(props)
      this.state = {
+       fullName:"",
        email:"",
        originalPassword:"",
        message: null,
@@ -25,13 +26,13 @@ genericSync(event){
 handleSubmit(event) {
   event.preventDefault();
   axios.post(
-    `${process.env.REACT_APP_API_URL}/api/login`,
+    `${process.env.REACT_APP_API_URL}/api/signup`,
     this.state,
     { withCredentials: true }, // FORCE axios to send cookies across domains
 )
-    .then(response => {
-      console.log("Login Page", response.data);
-      const { userDoc } = response.data;
+    .then(responseFromServer => {
+      console.log("Signup Page", responseFromServer);
+      const { userDoc } = responseFromServer.data;
       //send "userDoc" to the App.js function that changeS "currentUser"
       this.props.onUserChange(userDoc);
     })
@@ -43,7 +44,8 @@ handleSubmit(event) {
     })
 }
    render(){
-    if(this.props.currentUser){
+    const {currentUser} = this.props
+    if(currentUser){
       return <Redirect to='/' />
   }
     return(
@@ -53,7 +55,16 @@ handleSubmit(event) {
          
           <ModalExample />
       </div>
-      
+      <Form.Input 
+            value={this.state.fullName}
+            onChange={event => this.genericSync(event)}
+            name="fullName" 
+            fluid
+            icon="user"
+            iconPosition="left"
+            placeholder="Full Name"
+            label="Full Name" 
+          />
         <Form.Input 
             value={this.state.email}
             onChange={event => this.genericSync(event)}
@@ -76,15 +87,12 @@ handleSubmit(event) {
             type="password"/>
       </Form.Group>
       {/* <Form.Button>Submit</Form.Button> */}
-      <Button color="blue" fluid size="large" onClick={() => console.log('Clicked')}>Login</Button>
+      <Button color="blue" fluid size="large" onClick={() => console.log('Clicked')}>Sign Up</Button>
   
     </Form>
-    // <Link>
-    // Already Have an account? <NavLink to={"/login-page"}> Login</NavLink>
-    // </Link >
     )
     
    }
 };
 
-export default Login;
+export default Signup;

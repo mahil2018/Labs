@@ -1,4 +1,4 @@
-import React from'react';
+import React, { Component } from "react";
 import pf from 'petfinder-client';
 import { navigate } from "@reach/router/lib/history";
 import { Switch,  Route } from "react-router-dom";  //NavLink,
@@ -11,7 +11,7 @@ const petfinder = pf ({
     secret: process.env.API_SECRET
 })
 
-class Details extends React.Component {
+class Details extends Component {
     constructor(props) {
       super(props);
   

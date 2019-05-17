@@ -13,7 +13,7 @@ const ModalExample = () => (
       <Modal.Description>
         <Header>Default Profile Image</Header>
         <p>
-          We've found the following gravatar image associated with
+          We have found the following Aravatar image associated with
           your e-mail address.
         </p>
         <p>Is it okay to use this photo?</p>
