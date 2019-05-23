@@ -101190,7 +101190,7 @@ function (_Component) {
 
       event.preventDefault();
 
-      _axios.default.post('http://localhost:3001/api/checkuser/api/login', this.state, {
+      _axios.default.post('http://localhost:3001/api/login', this.state, {
         withCredentials: true
       } // FORCE axios to send cookies across domains
       ).then(function (response) {
@@ -101212,12 +101212,6 @@ function (_Component) {
     value: function render() {
       var _this3 = this;
 
-      if (this.props.currentUser) {
-        return _react.default.createElement(_reactRouterDom.Redirect, {
-          to: "/"
-        });
-      }
-
       return _react.default.createElement(_semanticUiReact.Form, {
         size: "large",
         onSubmit: function onSubmit(event) {
@@ -101230,8 +101224,8 @@ function (_Component) {
         onChange: function onChange(event) {
           return _this3.genericSync(event);
         },
-        name: "email",
-        fluid: true,
+        name: "email" // fluid
+        ,
         icon: "user",
         iconPosition: "left",
         placeholder: "Email address",
@@ -101241,8 +101235,8 @@ function (_Component) {
         onChange: function onChange(event) {
           return _this3.genericSync(event);
         },
-        name: "originalPassword",
-        fluid: true,
+        name: "originalPassword" // fluid
+        ,
         icon: "lock",
         iconPosition: "left",
         label: "Password",
@@ -101250,11 +101244,8 @@ function (_Component) {
         type: "password"
       })), _react.default.createElement(_semanticUiReact.Button, {
         color: "blue",
-        fluid: true,
         size: "large",
-        onClick: function onClick() {
-          return console.log('Clicked');
-        }
+        icon: true
       }, "Login")) // <Link>
       // Already Have an account? <NavLink to={"/login-page"}> Login</NavLink>
       // </Link >
@@ -101345,7 +101336,7 @@ function (_Component) {
 
       event.preventDefault();
 
-      _axios.default.post('http://localhost:3001/api/checkuser/api/signup', this.state, {
+      _axios.default.post('http://localhost:3001/api/signup', this.state, {
         withCredentials: true
       } // FORCE axios to send cookies across domains
       ).then(function (responseFromServer) {
@@ -101387,8 +101378,8 @@ function (_Component) {
         onChange: function onChange(event) {
           return _this3.genericSync(event);
         },
-        name: "fullName",
-        fluid: true,
+        name: "fullName" // fluid
+        ,
         icon: "user",
         iconPosition: "left",
         placeholder: "Full Name",
@@ -101398,8 +101389,8 @@ function (_Component) {
         onChange: function onChange(event) {
           return _this3.genericSync(event);
         },
-        name: "email",
-        fluid: true,
+        name: "email" // fluid
+        ,
         icon: "user",
         iconPosition: "left",
         placeholder: "Email address",
@@ -101409,8 +101400,8 @@ function (_Component) {
         onChange: function onChange(event) {
           return _this3.genericSync(event);
         },
-        name: "originalPassword",
-        fluid: true,
+        name: "originalPassword" // fluidgit
+        ,
         icon: "lock",
         iconPosition: "left",
         label: "Password",
@@ -101418,11 +101409,8 @@ function (_Component) {
         type: "password"
       })), _react.default.createElement(_semanticUiReact.Button, {
         color: "blue",
-        fluid: true,
         size: "large",
-        onClick: function onClick() {
-          return console.log('Clicked');
-        }
+        icon: true
       }, "Sign Up"));
     }
   }]);
@@ -102726,7 +102714,7 @@ function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      _axios.default.get('http://localhost:3001/api/checkuser/api/checkuser', {
+      _axios.default.get('http://localhost:3001/api/checkuser', {
         withCredentials: true
       }).then(function (responseFromBackend) {
         // console.log("Check User in APP.JS: ",responseFromBackend.data)
@@ -102748,7 +102736,7 @@ function (_React$Component) {
     value: function logout() {
       var _this3 = this;
 
-      _axios.default.delete('http://localhost:3001/api/checkuser/api/logout', {
+      _axios.default.delete('http://localhost:3001/api/logout', {
         withCredentials: true
       }).then(function () {
         return _this3.syncCurrentUser(null);
@@ -102811,7 +102799,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49240" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55823" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

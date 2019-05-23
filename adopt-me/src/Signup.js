@@ -26,7 +26,7 @@ genericSync(event){
 handleSubmit(event) {
   event.preventDefault();
   axios.post(
-    'http://localhost:3001/api/checkuser/api/signup',
+    'http://localhost:3001/api/signup',
     this.state,
     { withCredentials: true }, // FORCE axios to send cookies across domains
 )
@@ -59,7 +59,7 @@ handleSubmit(event) {
             value={this.state.fullName}
             onChange={event => this.genericSync(event)}
             name="fullName" 
-            fluid
+            // fluid
             icon="user"
             iconPosition="left"
             placeholder="Full Name"
@@ -69,7 +69,7 @@ handleSubmit(event) {
             value={this.state.email}
             onChange={event => this.genericSync(event)}
             name="email" 
-            fluid
+            // fluid
             icon="user"
             iconPosition="left"
             placeholder="Email address"
@@ -79,7 +79,7 @@ handleSubmit(event) {
             value={this.state.originalPassword}
             onChange={event => this.genericSync(event)}
             name="originalPassword" 
-            fluid
+            // fluidgit
             icon="lock"
             iconPosition="left"
             label="Password" 
@@ -87,8 +87,8 @@ handleSubmit(event) {
             type="password"/>
       </Form.Group>
       {/* <Form.Button>Submit</Form.Button> */}
-      <Button color="blue" fluid size="large" onClick={() => console.log('Clicked')}>Sign Up</Button>
-  
+      {/* <Button color="blue" size="large" onClick={() => console.log('Clicked')}>Sign Up</Button> */}
+      <Button color="blue" size="large" icon >Sign Up</Button>
     </Form>
     )
     

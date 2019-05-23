@@ -25,7 +25,7 @@ genericSync(event){
 handleSubmit(event) {
   event.preventDefault();
   axios.post(
-    'http://localhost:3001/api/checkuser/api/login',
+    'http://localhost:3001/api/login',
     this.state,
     { withCredentials: true }, // FORCE axios to send cookies across domains
 )
@@ -43,9 +43,7 @@ handleSubmit(event) {
     })
 }
    render(){
-    if(this.props.currentUser){
-      return <Redirect to='/' />
-  }
+    
     return(
       <Form size="large" onSubmit={event => this.handleSubmit(event)}>
       <Form.Group width="equal">
@@ -58,7 +56,7 @@ handleSubmit(event) {
             value={this.state.email}
             onChange={event => this.genericSync(event)}
             name="email" 
-            fluid
+            // fluid
             icon="user"
             iconPosition="left"
             placeholder="Email address"
@@ -68,7 +66,7 @@ handleSubmit(event) {
             value={this.state.originalPassword}
             onChange={event => this.genericSync(event)}
             name="originalPassword" 
-            fluid
+            // fluid
             icon="lock"
             iconPosition="left"
             label="Password" 
@@ -76,7 +74,8 @@ handleSubmit(event) {
             type="password"/>
       </Form.Group>
       {/* <Form.Button>Submit</Form.Button> */}
-      <Button color="blue" fluid size="large" onClick={() => console.log('Clicked')}>Login</Button>
+      {/* <Button color="blue" fluid size="large" onClick={() => console.log('Clicked')}>Login</Button> */}
+      <Button color="blue" size="large" icon >Login</Button>
   
     </Form>
     // <Link>

@@ -4,6 +4,7 @@
   "description": "An app to teach you to write React",
   "main": "src/App.js",
   "scripts": {
+    "clear-build-cache": "rm -rf .cache/ dist/",
     "test": "",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
